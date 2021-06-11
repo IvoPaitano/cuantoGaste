@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Expenses</h1>
+    <form action="" method="GET">
+        <input type="text" name="buscador" id="buscador" placeholder="Buscar ...">
+        <input type="submit" value="buscador">
+    </form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Titulo</th>
+            <th>Categoria</th>
+            <th>Descripcion</th>
+            <th>Fecha</th>
+            <th>Monto</th>
+            <th colspan="2">Acciones</th>
+        </tr>
+        {% for expense in expenses %}
+        <tr>
+            <td>{{ expense.id }}</td>
+            <td>{{ expense.title }}</td>
+            <td>{{ expense.typeExpense }}</td>
+            <td>{{ expense.description }}</td>
+            <td>{{ expense.date }}</td>
+            <td>{{ expense.amount }}</td>
+            <td><button><a href="{% url 'expenses' %}edit/{{ expense.id }}">Editar</a></button></td>
+            <td><button><a href="{% url 'expenses' %}delete/{{ expense.id }}">Eliminar</a></button></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {{ form.title.label }}
+        {{ form.title }}
+
+        {{ form.typeExpense.label }}
+        {{ form.typeExpense }}
+
+        {{ form.description.label }}
+        {{ form.description }}
+
+        {{ form.amount.label }}
+        {{ form.amount }}
+
+        <input type="submit" value="Confirmar">
+    </form>
+    <button><a href="{% url 'home' %}">Home</a></button>
+</body>
+</html>
